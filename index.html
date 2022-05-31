@@ -23,6 +23,7 @@
         data-bs-toggle="modal"
         data-bs-target="#staticBackdrop"
       >
+        <i class="bi bi-person"></i>
         Check in
       </button>
     </nav>
@@ -51,9 +52,10 @@
           <div class="modal-footer">
             <button
               type="button"
-              class="close btn-secondary"
+              class="close btn btn-danger"
               data-bs-dismiss="modal"
             >
+              <i class="bi bi-x"></i>
               Cancel
             </button>
             <button
@@ -62,6 +64,7 @@
               id="check"
               data-bs-toggle="modal"
             >
+              <i class="bi bi-person"></i>
               Check in
             </button>
           </div>
@@ -125,12 +128,14 @@
             <button
               type="button"
               id="cancel"
-              class="btn btn-secondary"
+              class="btn btn-danger"
               data-bs-dismiss="modal"
             >
+              <i class="bi bi-x"></i>
               Cancel
             </button>
             <button type="button" id="save" class="btn btn-primary">
+              <i class="bi bi-save"></i>
               Save
             </button>
           </div>
@@ -141,132 +146,149 @@
     <!-- service information -->
     <!-- service dropdown -->
 
-    <section class="p-4">
-      <div class="row g4">
-        <div class="col-md">
-          <label for="services">Services</label>
-          <select class="form-select w-100" aria-label="Default select example">
-            <option value="prompt">services</option>
-            <option value="dental">dental</option>
-            <option value="lab tests">lab tests</option>
-            <option value="pharmacy">pharmacy</option>
-          </select>
-        </div>
-
-        <div class="col-md">
-          <label for="provider">Service Provider</label>
-          <select class="form-select w-100" aria-label="Default select example">
-            <option value="prompt">services</option>
-            <option value="dental">dental</option>
-            <option value="lab tests">lab tests</option>
-            <option value="pharmacy">pharmacy</option>
-          </select>
-        </div>
-
-        <div class="col-md">
-          <label for="location">location</label>
-          <select class="form-select w-100" aria-label="Default select example">
-            <option value="prompt">services</option>
-            <option value="dental">dental</option>
-            <option value="lab tests">lab tests</option>
-            <option value="pharmacy">pharmacy</option>
-          </select>
-        </div>
-      </div>
-    </section>
-
-    <!-- alert & show amount -->
-    <section class="p-3">
-      <div class="row g-4">
-        <div class="col-md">
-          <div class="alert alert-info" role="alert">
-            A simple info alert—check it out!
-          </div>
-        </div>
-
-        <div class="col-md">
-          <div class="input-group mb-3">
-            <input
-              type="text"
-              class="form-control"
-              aria-label="Recipient's username"
-              aria-describedby="button-addon2"
-            />
-            <button
-              class="btn btn-outline-secondary"
-              type="button"
-              id="button-addon2"
-            >
-              <i class="bi bi-plus"></i>
-              Add
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- table -->
-    <section class="p-3">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Service</th>
-            <th>Provider</th>
-            <th>Price</th>
-            <th></th>
-          </tr>
-        </thead>
-      </table>
-    </section>
-
-    <!-- summery -->
-    <section class="p-3">
-      <i class="bi bi-list-task lead"></i> <span class="lead"> Summery</span>
-      <div class="row g-4">
-        <div class="col-md">
-          <div class="mb-3">
-            <p class="lead">Total:</p>
-            <p class="lead">Discount:</p>
-            <p class="lead">Amount Paid(Initial):</p>
-            <p class="lead">Balance:</p>
-          </div>
-        </div>
-
-        <div class="col-md">
-          <div class="mb-3">
-            <p class="lead">00</p>
-            <input type="text" class="form-control w-75" />
-          </div>
-          <div class="mb-3">
-            <input type="text" class="form-control w-75" />
-            <p class="lead">00</p>
-          </div>
-        </div>
-
-        <div class="col-md">
-          <div class="mb-3">
-            <p class="lead">Payment Method:</p>
-            <p class="lead">REF#:</p>
-          </div>
-        </div>
-
-        <div class="col-md">
-          <div class="mb-3">
+    <section id="section">
+      <section class="p-4">
+        <div class="row g4">
+          <div class="col-md">
+            <label for="services">Services</label>
             <select
-              class="form-select w-75"
+              class="form-select w-100"
+              id="select-service"
               aria-label="Default select example"
             >
-              <option value=""></option>
-              <option value="cash">cash</option>
-              <option value="mpesa">mpesa</option>
-              <option value="cheque">cheque</option>
+              <option value="prompt">services</option>
+              <option value="dental">dental</option>
+              <option value="lab tests">lab tests</option>
+              <option value="pharmacy">pharmacy</option>
             </select>
           </div>
-          <div class="mb-3">
-            <input type="text" class="form-control w-75" />
+
+          <div class="col-md">
+            <label for="provider">Service Provider</label>
+            <select
+              class="form-select w-100"
+              id="select-provider"
+              aria-label="Default select example"
+            >
+              <option value="prompt">services</option>
+              <option value="dental">dental</option>
+              <option value="lab tests">lab tests</option>
+              <option value="pharmacy">pharmacy</option>
+            </select>
+          </div>
+
+          <div class="col-md">
+            <label for="location">location</label>
+            <select
+              class="form-select w-100"
+              id="select-location"
+              aria-label="Default select example"
+            >
+              <option value="prompt">services</option>
+              <option value="dental">dental</option>
+              <option value="lab tests">lab tests</option>
+              <option value="pharmacy">pharmacy</option>
+            </select>
           </div>
         </div>
-      </div>
+      </section>
+
+      <!-- alert & show amount -->
+      <section class="p-3">
+        <div class="row g-4">
+          <div class="col-md">
+            <div class="alert alert-info" role="alert">
+              A simple info alert—check it out!
+            </div>
+          </div>
+
+          <div class="col-md">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" id="input" />
+              <button class="btn btn-primary" type="button" id="button-addon">
+                <i class="bi bi-plus"></i>
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- table -->
+      <section class="p-3">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Service</th>
+              <th>Provider</th>
+              <th>Price</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="service-list"></tbody>
+        </table>
+      </section>
+
+      <!-- summery -->
+      <section class="p-3">
+        <i class="bi bi-list-task lead"></i> <span class="lead"> Summery</span>
+        <div class="row g-4">
+          <div class="col-md">
+            <div class="mb-3">
+              <p class="lead">Total:</p>
+              <p class="lead">Discount:</p>
+              <p class="lead">Amount Paid(Initial):</p>
+              <p class="lead">Balance:</p>
+            </div>
+          </div>
+
+          <div class="col-md">
+            <div class="mb-3">
+              <p class="lead">00</p>
+              <input type="text" class="form-control w-75" />
+            </div>
+            <div class="mb-3">
+              <input type="text" class="form-control w-75" />
+              <p class="lead">00</p>
+            </div>
+          </div>
+
+          <div class="col-md">
+            <div class="mb-3">
+              <p class="lead">Payment Method:</p>
+              <p class="lead">REF#:</p>
+            </div>
+          </div>
+
+          <div class="col-md">
+            <div class="mb-3">
+              <select
+                class="form-select w-75"
+                aria-label="Default select example"
+              >
+                <option value=""></option>
+                <option value="cash">cash</option>
+                <option value="mpesa">mpesa</option>
+                <option value="cheque">cheque</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <input type="text" class="form-control w-75" />
+            </div>
+
+            <div class="p-5">
+              <button type="button" id="reset" class="btn btn-danger">
+                <i class="bi bi-x"></i>
+                Reset
+              </button>
+              <button type="button" id="submit" class="btn btn-primary">
+                <i class="bi bi-cart-dash"></i>
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
     </section>
 
     <!-- JavaScript Bundle with Popper -->
