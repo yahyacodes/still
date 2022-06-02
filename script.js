@@ -58,24 +58,35 @@ const providers = document.querySelector("#select-provider");
 const locationInput = document.querySelector("#select-location");
 const addbtn = document.querySelector("#button-addon");
 const input = document.querySelector("#input");
+const dataPrice = document.querySelector("#select-value");
+const priceData = dataPrice.getAttribute("data-price");
+const alertMss = document.querySelector(".alert");
+const message = document.querySelector(".message");
 
-section.style.display = "none";
+// section2
+const amount = document.querySelector("#amount");
+const discount = document.querySelector("#discount");
+const piadinitial = document.querySelector("#paid-initial");
+const balance = document.querySelector("#balance");
+
+select.addEventListener("change", () => {
+  const priceValue = select.options[select.selectedIndex].dataset.price;
+
+  input.value = priceValue;
+  message.innerHTML = select.value;
+});
+
+// section.style.display = "none";
 
 addbtn.addEventListener("click", function () {
-  console.log("ADD");
-  const service1 = select.value;
-  const service2 = providers.value;
-  const service3 = locationInput.value;
-
-  let inputValue = 0;
-  input.value = service1;
+  amount.innerHTML = input.value;
 });
 
 class Services {
-  constructor(service, provider, location) {
+  constructor(service, provider, priceValue) {
     this.service = service;
     this.provider = provider;
-    this.location = location;
+    this.priceValue = priceValue;
   }
 }
 
@@ -93,7 +104,7 @@ class UI {
     row.innerHTML = `
     <td>${service.service}</td>
     <td>${service.provider}</td>
-    <td>${service.location}</td>
+    <td>${service.priceValue}</td>
     <td><a href="#" class="btn btn-danger btn-sm delete">X</a></td>
     `;
     list.appendChild(row);
@@ -125,21 +136,33 @@ document.querySelector("#button-addon").addEventListener("click", (e) => {
 
       localStorage.setItem("services", JSON.stringify(services));
     }
-    static removeService(location) {
+    static removeService(dataPrice) {
       const services = Store.getServices();
 
       services.forEach((service, index) => {
-        if (services.location === location) {
+        if (services.priceValue === priceValue) {
           services.splice(index, 1);
         }
       });
       localStorage.removeItem("services", JSON.stringify(services));
     }
+
+    static getAmount() {
+      let totalAmount = parseFloat(localStorage.getItem("totalAmount"));
+      if (!totalAmount) {
+      }
+      return totalAmount;
+    }
+
+    static addAmount(total) {
+      const totalAmount = Store.getAmount() + total;
+      return localStorage.setItem("totalAmount", totalAmount);
+    }
   }
 
   const service = document.querySelector("#select-service").value;
   const provider = document.querySelector("#select-provider").value;
-  const price = document.querySelector("#select-location").value;
+  const price = select.options[select.selectedIndex].dataset.price;
 
   if (service === "" || provider === "" || price === "") {
     alert("Please choose from selectors");
@@ -147,6 +170,9 @@ document.querySelector("#button-addon").addEventListener("click", (e) => {
     const service5 = new Services(service, provider, price);
 
     UI.addServiceToList(service5);
+    Store.addAmount(parseFloat(input.value));
+    const totalAmount = Store.getAmount();
+    amount.innerHTML = totalAmount;
   }
 });
 

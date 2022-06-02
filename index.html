@@ -23,7 +23,7 @@
         data-bs-toggle="modal"
         data-bs-target="#staticBackdrop"
       >
-        <i class="bi bi-person"></i>
+        <i class="bi bi-person-fill"></i>
         Check in
       </button>
     </nav>
@@ -64,7 +64,7 @@
               id="check"
               data-bs-toggle="modal"
             >
-              <i class="bi bi-person"></i>
+              <i class="bi bi-person-fill"></i>
               Check in
             </button>
           </div>
@@ -157,9 +157,15 @@
               aria-label="Default select example"
             >
               <option value="prompt">services</option>
-              <option value="dental">dental</option>
-              <option value="lab tests">lab tests</option>
-              <option value="pharmacy">pharmacy</option>
+              <option value="dental" data-price="1000" id="select-value">
+                dental
+              </option>
+              <option value="lab tests" data-price="2000" id="select-value">
+                lab tests
+              </option>
+              <option value="pharmacy" data-price="3000" id="select-value">
+                pharmacy
+              </option>
             </select>
           </div>
 
@@ -170,10 +176,10 @@
               id="select-provider"
               aria-label="Default select example"
             >
-              <option value="prompt">services</option>
-              <option value="dental">dental</option>
-              <option value="lab tests">lab tests</option>
-              <option value="pharmacy">pharmacy</option>
+              <option value="prompt">Service Provider</option>
+              <option value="Ali">Ali</option>
+              <option value="Mohammed">Mohammed</option>
+              <option value="Yaceen">Yaceen</option>
             </select>
           </div>
 
@@ -198,7 +204,8 @@
         <div class="row g-4">
           <div class="col-md">
             <div class="alert alert-info" role="alert">
-              A simple info alert—check it out!
+              Summery
+              <div class="lead p-2 message"></div>
             </div>
           </div>
 
@@ -244,12 +251,12 @@
 
           <div class="col-md">
             <div class="mb-3">
-              <p class="lead">00</p>
-              <input type="text" class="form-control w-75" />
+              <p class="lead" id="amount" value="Add">00</p>
+              <input type="text" class="form-control w-75" id="discount" />
             </div>
             <div class="mb-3">
-              <input type="text" class="form-control w-75" />
-              <p class="lead">00</p>
+              <input type="text" class="form-control w-75" id="paid-initial" />
+              <p class="lead" id="balance">00</p>
             </div>
           </div>
 
