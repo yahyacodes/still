@@ -32,7 +32,6 @@ check.onclick = function () {
   modal2.style.display = "block";
   modal.style.display = "none";
   section.style.display = "block";
-  // btnClose.click();
 };
 
 close.onclick = function () {
@@ -64,10 +63,11 @@ const alertMss = document.querySelector(".alert");
 const message = document.querySelector(".message");
 
 // section2
-const amount = document.querySelector("#amount");
+let amount = document.querySelector("#amount");
 const discount = document.querySelector("#discount");
 const piadinitial = document.querySelector("#paid-initial");
 const balance = document.querySelector("#balance");
+localStorage.setItem("totalAmount", 0);
 
 select.addEventListener("change", () => {
   const priceValue = select.options[select.selectedIndex].dataset.price;
@@ -76,7 +76,24 @@ select.addEventListener("change", () => {
   message.innerHTML = select.value;
 });
 
-// section.style.display = "none";
+piadinitial.addEventListener("input", function (e) {
+  e.preventDefault();
+  let amountPaid = parseFloat(piadinitial.value);
+  let totalVal = parseFloat(localStorage.getItem("totalAmount"));
+  let balanceVal = amount.innerHTML - amountPaid;
+  balance.innerHTML = balanceVal;
+});
+
+discount.addEventListener("input", function (e) {
+  e.preventDefault();
+  let amountPaid = parseFloat(piadinitial.value);
+  let discountMade = parseFloat(discount.value);
+  let totalVal = parseFloat(localStorage.getItem("totalAmount"));
+  amount.innerHTML = totalVal - discountMade;
+  balance.innerHTML = amount.innerHTML;
+});
+
+section.style.display = "none";
 
 addbtn.addEventListener("click", function () {
   amount.innerHTML = input.value;
@@ -116,7 +133,6 @@ class UI {
   }
 }
 
-// document.addEventListener("DOMContentLoaded", UI.displayService);
 document.querySelector("#button-addon").addEventListener("click", (e) => {
   class Store {
     static getServices() {
@@ -173,6 +189,8 @@ document.querySelector("#button-addon").addEventListener("click", (e) => {
     Store.addAmount(parseFloat(input.value));
     const totalAmount = Store.getAmount();
     amount.innerHTML = totalAmount;
+    piadinitial.value = totalAmount;
+    balance.innerHTML = totalAmount;
   }
 });
 
