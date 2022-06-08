@@ -193,6 +193,12 @@ document.querySelector('#button-addon').addEventListener('click', e => {
   } else {
     const service5 = new Services(service, provider, price);
 
+    let serviceItem = JSON.parse(localStorage.getItem('services'));
+    // console.log(serviceItem);
+
+    for (i = 0; i < service.length; i++) {
+      console.log(service[0]);
+    }
     // Get the services from the localStorage and parse it
     // Loop over the array of services
     // For each service, check whether it matches `service`, alert('Service already added!) and return
