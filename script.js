@@ -9,6 +9,7 @@ const modal2 = document.querySelector('#modal');
 const close = document.querySelector('#close');
 const cancel = document.querySelector('#cancel');
 const save = document.querySelector('#save');
+localStorage.setItem('services', null);
 
 btn.onclick = function () {
   modal.style.display = 'block';
@@ -184,7 +185,7 @@ document.querySelector('#button-addon').addEventListener('click', e => {
   }
 
   //Table rows display on UI
-  const service = document.querySelector('#select-service').value;
+  let service = select.value;
   const provider = document.querySelector('#select-provider').value;
   const price = select.options[select.selectedIndex].dataset.price;
 
@@ -193,12 +194,29 @@ document.querySelector('#button-addon').addEventListener('click', e => {
   } else {
     const service5 = new Services(service, provider, price);
 
-    let serviceItem = JSON.parse(localStorage.getItem('services'));
-    // console.log(serviceItem);
+    let serviceItems = JSON.parse(localStorage.getItem('services'));
 
-    for (i = 0; i < service.length; i++) {
-      console.log(service[0]);
+    if (serviceItems) {
+      const serviceArray = serviceItems.find(s => s.service === service);
+
+      if (serviceArray) {
+        alert('Service already added');
+
+        return;
+      }
     }
+
+    // let serviceItems = JSON.parse(localStorage.getItem('services'));
+
+    // if (serviceItems) {
+    //   const serviceArray = serviceItems.find(s => s.service === service);
+
+    //   if (serviceArray) {
+    //     alert('service already added');
+
+    //     return;
+    //   }
+    // }
     // Get the services from the localStorage and parse it
     // Loop over the array of services
     // For each service, check whether it matches `service`, alert('Service already added!) and return
@@ -234,6 +252,7 @@ document.querySelector('#service-list').addEventListener('click', e => {
   piadinitial.value = totalVal - discountMade;
 
   UI.deleteServices(e.target);
+  localStorage.removeItem(Services);
 
   Store.removeService(Services);
 });
