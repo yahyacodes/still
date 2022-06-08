@@ -9,7 +9,25 @@ const modal2 = document.querySelector('#modal');
 const close = document.querySelector('#close');
 const cancel = document.querySelector('#cancel');
 const save = document.querySelector('#save');
+
+// section1
+const section = document.querySelector('#section');
+const select = document.querySelector('#select-service');
+const providers = document.querySelector('#select-provider');
+const locationInput = document.querySelector('#select-location');
+const addbtn = document.querySelector('#button-addon');
+const input = document.querySelector('#input');
+const dataPrice = document.querySelector('#select-value');
+const priceData = dataPrice.getAttribute('data-price');
+const alertMss = document.querySelector('.alert');
+const message = document.querySelector('.message');
+// section2
+let amount = document.querySelector('#amount');
+const discount = document.querySelector('#discount');
+const piadinitial = document.querySelector('#paid-initial');
+const balance = document.querySelector('#balance');
 localStorage.setItem('services', null);
+localStorage.setItem('totalAmount', 0);
 
 btn.onclick = function () {
   modal.style.display = 'block';
@@ -54,24 +72,7 @@ save.onclick = function () {
   modal2.style.display = 'none';
 };
 
-// section1
-const section = document.querySelector('#section');
-const select = document.querySelector('#select-service');
-const providers = document.querySelector('#select-provider');
-const locationInput = document.querySelector('#select-location');
-const addbtn = document.querySelector('#button-addon');
-const input = document.querySelector('#input');
-const dataPrice = document.querySelector('#select-value');
-const priceData = dataPrice.getAttribute('data-price');
-const alertMss = document.querySelector('.alert');
-const message = document.querySelector('.message');
-
-// section2
-let amount = document.querySelector('#amount');
-const discount = document.querySelector('#discount');
-const piadinitial = document.querySelector('#paid-initial');
-const balance = document.querySelector('#balance');
-localStorage.setItem('totalAmount', 0);
+section.style.display = 'none';
 
 // dropdown selected option
 select.addEventListener('change', () => {
@@ -98,12 +99,6 @@ discount.addEventListener('input', function (e) {
   amount.innerHTML = totalVal - discountMade;
   balance.innerHTML = amount.innerHTML;
   piadinitial.value = totalVal - discountMade;
-});
-
-// section.style.display = 'none';
-
-addbtn.addEventListener('click', function () {
-  amount.innerHTML = input.value;
 });
 
 // Table display on UI
@@ -141,50 +136,50 @@ class UI {
   }
 }
 
-// Local Storage
-document.querySelector('#button-addon').addEventListener('click', e => {
-  // Getting Items to display on UI
-  // Adding services on UI
-  class Store {
-    static getServices() {
-      return JSON.parse(localStorage.getItem('services')) || [];
-    }
-
-    static addService(service) {
-      const services = Store.getServices();
-
-      services.push(service);
-
-      localStorage.setItem('services', JSON.stringify(services));
-    }
-
-    //Add amount on UI
-    static getAmount() {
-      let totalAmount = parseFloat(localStorage.getItem('totalAmount'));
-      if (!totalAmount) {
-      }
-      return totalAmount;
-    }
-
-    static addAmount(total) {
-      const totalAmount = Store.getAmount() + total;
-      return localStorage.setItem('totalAmount', totalAmount);
-    }
-
-    // Remove Items from UI
-    static removeService(dataPrice) {
-      const services = Store.getServices();
-
-      services.forEach((service, index) => {
-        if (services.priceValue === priceValue) {
-          services.splice(index, 1);
-        }
-      });
-      localStorage.removeItem('services', JSON.stringify(services));
-    }
+//Local Storage
+class Store {
+  static getServices() {
+    return JSON.parse(localStorage.getItem('services')) || [];
   }
 
-  //Table rows display on UI
+  static addService(service) {
+    const services = Store.getServices();
+
+    services.push(service);
+
+    localStorage.setItem('services', JSON.stringify(services));
+  }
+
+  //Add amount on UI
+  static getAmount() {
+    let totalAmount = parseFloat(localStorage.getItem('totalAmount'));
+    if (!totalAmount) {
+    }
+    return totalAmount;
+  }
+
+  static addAmount(total) {
+    const totalAmount = Store.getAmount() + total;
+    return localStorage.setItem('totalAmount', totalAmount);
+  }
+
+  // Remove Items from UI
+  static removeService(priceValue) {
+    const services = Store.getServices();
+
+    services.forEach((service, index) => {
+      if (services.priceValue === priceValue) {
+        services.splice(index, 1);
+      }
+    });
+    localStorage.removeItem('services', JSON.stringify(services));
+  }
+}
+
+//Table rows display on UI
+addbtn.addEventListener('click', function () {
+  amount.innerHTML = input.value; // <= Amount display on UI
+
   let service = select.value;
   const provider = document.querySelector('#select-provider').value;
   const price = select.options[select.selectedIndex].dataset.price;
@@ -194,6 +189,7 @@ document.querySelector('#button-addon').addEventListener('click', e => {
   } else {
     const service5 = new Services(service, provider, price);
 
+    //Assisted (Thanks to Muad)
     let serviceItems = JSON.parse(localStorage.getItem('services'));
 
     if (serviceItems) {
@@ -206,21 +202,6 @@ document.querySelector('#button-addon').addEventListener('click', e => {
       }
     }
 
-    // let serviceItems = JSON.parse(localStorage.getItem('services'));
-
-    // if (serviceItems) {
-    //   const serviceArray = serviceItems.find(s => s.service === service);
-
-    //   if (serviceArray) {
-    //     alert('service already added');
-
-    //     return;
-    //   }
-    // }
-    // Get the services from the localStorage and parse it
-    // Loop over the array of services
-    // For each service, check whether it matches `service`, alert('Service already added!) and return
-
     Store.addService(service5);
     UI.addServiceToList(service5);
     Store.addAmount(parseFloat(input.value));
@@ -229,30 +210,11 @@ document.querySelector('#button-addon').addEventListener('click', e => {
     piadinitial.value = totalAmount;
     balance.innerHTML = totalAmount;
   }
-
-  // if (localStorage.getItem('services') === null) {
-  //   services = [];
-  // } else {
-  //   services = JSON.parse(localStorage.getItem('services'));
-  // }
 });
 
 // Remove table rows from UI
 document.querySelector('#service-list').addEventListener('click', e => {
-  let amounthtml = parseFloat(piadinitial.value);
-  let totalValu = parseFloat(localStorage.getItem('totalAmount'));
-  let balanceVal = amount.innerHTML - amounthtml;
-  balance.innerHTML = balanceVal;
-
-  let amountPaid = parseFloat(piadinitial.value);
-  let discountMade = parseFloat(discount.value);
-  let totalVal = parseFloat(localStorage.getItem('totalAmount'));
-  amount.innerHTML = totalVal - discountMade;
-  balance.innerHTML = amount.innerHTML;
-  piadinitial.value = totalVal - discountMade;
-
   UI.deleteServices(e.target);
-  localStorage.removeItem(Services);
 
   Store.removeService(Services);
 });
