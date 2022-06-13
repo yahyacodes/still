@@ -125,13 +125,18 @@ class UI {
     <td>${service.service}</td>
     <td>${service.provider}</td>
     <td>${service.priceValue}</td>
-    <td><a href="#" class="btn btn-danger btn-sm delete">X</a></td>
+    <td><a href="#" class="btn btn-danger btn-sm delete" data-service="${service.service}">X</a></td>
     `;
     list.appendChild(row);
   }
   static deleteServices(el) {
     if (el.classList.contains('delete')) {
       el.parentElement.parentElement.remove();
+      Store.removeService(el.dataset.service);
+      const totalAmount = Store.getAmount();
+      amount.innerHTML = totalAmount;
+      piadinitial.value = totalAmount;
+      balance.innerHTML = totalAmount;
     }
   }
 }
@@ -164,15 +169,24 @@ class Store {
   }
 
   // Remove Items from UI
-  static removeService(priceValue) {
+  static removeService(serviceName) {
     const services = Store.getServices();
+    const removedService = services.find(
+      service => service.service === serviceName
+    );
 
-    services.forEach((service, index) => {
-      if (services.priceValue === priceValue) {
-        services.splice(index, 1);
-      }
-    });
-    localStorage.removeItem('services', JSON.stringify(services));
+    localStorage.setItem(
+      'services',
+      JSON.stringify(
+        services.filter(service => service.service !== serviceName)
+      )
+    );
+
+    if (removedService) {
+      const currentTotal = parseFloat(localStorage.getItem('totalAmount'));
+      let newTotal = currentTotal - parseFloat(removedService.priceValue);
+      localStorage.setItem('totalAmount', newTotal);
+    }
   }
 }
 
@@ -215,6 +229,4 @@ addbtn.addEventListener('click', function () {
 // Remove table rows from UI
 document.querySelector('#service-list').addEventListener('click', e => {
   UI.deleteServices(e.target);
-
-  Store.removeService(Services);
 });
